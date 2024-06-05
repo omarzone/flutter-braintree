@@ -155,7 +155,7 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements PayPalL
             nonceMap.put("typeLabel", "PayPal");
             nonceMap.put("description", paypalAccountNonce.getEmail());
 
-            HashMap<String, Object> billingAddressMap = getStringObjectHashMap(paypalAccountNonce);
+            HashMap<String, Object> billingAddressMap = getResultBillingAddress(paypalAccountNonce);
 
             nonceMap.put("billingAddress", billingAddressMap);
         }else if(paymentMethodNonce instanceof CardNonce){
@@ -171,7 +171,7 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements PayPalL
     }
 
     @NonNull
-    private static HashMap<String, Object> getStringObjectHashMap(PayPalAccountNonce paypalAccountNonce) {
+    private static HashMap<String, Object> getResultBillingAddress(PayPalAccountNonce paypalAccountNonce) {
         PostalAddress btBillingAddress = paypalAccountNonce.getBillingAddress();
         HashMap<String, Object> billingAddressMap = new HashMap<String, Object>();
         billingAddressMap.put("recipientName",btBillingAddress.getRecipientName());
