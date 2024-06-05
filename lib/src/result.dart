@@ -26,15 +26,19 @@ class BraintreePaymentMethodNonce {
     required this.description,
     required this.isDefault,
     this.paypalPayerId,
+    this.billingAddress,
   });
 
-  factory BraintreePaymentMethodNonce.fromJson(dynamic source) {
+  factory BraintreePaymentMethodNonce.fromJson(Map<dynamic, dynamic> source) {
     return BraintreePaymentMethodNonce(
       nonce: source['nonce'],
       typeLabel: source['typeLabel'],
       description: source['description'],
       isDefault: source['isDefault'],
       paypalPayerId: source['paypalPayerId'],
+      billingAddress: source['billingAddress'] != null
+          ? BraintreePostalAddress.fromJson(source['billingAddress'])
+          : null,
     );
   }
 
@@ -53,4 +57,48 @@ class BraintreePaymentMethodNonce {
 
   /// PayPal payer id if requesting for paypal nonce
   final String? paypalPayerId;
+
+  /// Customer billing address returned when the nonce is generated
+  final BraintreePostalAddress? billingAddress;
+}
+
+class BraintreePostalAddress {
+  String? recipientName;
+  String? streetAddress;
+  String? extendedAddress;
+  String? locality;
+  String? countryCodeAlpha2;
+  String? postalCode;
+  String? region;
+
+  BraintreePostalAddress(
+      {this.recipientName,
+      this.streetAddress,
+      this.extendedAddress,
+      this.locality,
+      this.countryCodeAlpha2,
+      this.postalCode,
+      this.region});
+
+  BraintreePostalAddress.fromJson(Map<dynamic, dynamic> json) {
+    recipientName = json['recipientName'];
+    streetAddress = json['streetAddress'];
+    extendedAddress = json['extendedAddress'];
+    locality = json['locality'];
+    countryCodeAlpha2 = json['countryCodeAlpha2'];
+    postalCode = json['postalCode'];
+    region = json['region'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['recipientName'] = this.recipientName ?? "";
+    data['streetAddress'] = this.streetAddress ?? "";
+    data['extendedAddress'] = this.extendedAddress ?? "";
+    data['locality'] = this.locality ?? "";
+    data['countryCodeAlpha2'] = this.countryCodeAlpha2 ?? "";
+    data['postalCode'] = this.postalCode ?? "";
+    data['region'] = this.region ?? "";
+    return data;
+  }
 }

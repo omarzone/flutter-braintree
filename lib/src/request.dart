@@ -105,27 +105,28 @@ class BraintreeBillingAddress {
   final String? postalCode;
   final String? countryCodeAlpha2;
 
-  BraintreeBillingAddress(
-      {this.givenName,
-      this.surname,
-      this.phoneNumber,
-      this.streetAddress,
-      this.extendedAddress,
-      this.locality,
-      this.region,
-      this.postalCode,
-      this.countryCodeAlpha2});
+  BraintreeBillingAddress({
+    this.givenName,
+    this.surname,
+    this.phoneNumber,
+    this.streetAddress,
+    this.extendedAddress,
+    this.locality,
+    this.region,
+    this.postalCode,
+    this.countryCodeAlpha2,
+  });
 
   Map<String, dynamic> toJson() => {
-        'givenName': givenName,
-        'surname': surname,
-        'phoneNumber': phoneNumber,
-        'streetAddress': streetAddress,
-        'extendedAddress': extendedAddress,
-        'locality': locality,
-        'region': region,
-        'postalCode': postalCode,
-        'countryCodeAlpha2': countryCodeAlpha2
+        'givenName': givenName ?? "",
+        'surname': surname ?? "",
+        'phoneNumber': phoneNumber ?? "",
+        'streetAddress': streetAddress ?? "",
+        'extendedAddress': extendedAddress ?? "",
+        'locality': locality ?? "",
+        'region': region ?? "",
+        'postalCode': postalCode ?? "",
+        'countryCodeAlpha2': countryCodeAlpha2 ?? ""
       };
 }
 
@@ -197,6 +198,7 @@ class BraintreePayPalRequest {
     this.currencyCode,
     this.displayName,
     this.billingAgreementDescription,
+    this.requestBillingAgreement = false,
     this.payPalPaymentIntent = PayPalPaymentIntent.authorize,
     this.payPalPaymentUserAction = PayPalPaymentUserAction.default_,
   });
@@ -214,6 +216,9 @@ class BraintreePayPalRequest {
   /// Description for the billing agreement for the Vault flow.
   String? billingAgreementDescription;
 
+  /// activate the option to request the billing address agreement
+  bool requestBillingAgreement;
+
   /// The payment intent in the PayPal Checkout flow.
   PayPalPaymentIntent payPalPaymentIntent;
 
@@ -230,6 +235,7 @@ class BraintreePayPalRequest {
           'billingAgreementDescription': billingAgreementDescription,
         'payPalPaymentIntent': payPalPaymentIntent.name,
         'payPalPaymentUserAction': payPalPaymentUserAction.name,
+        'requestBillingAgreement': requestBillingAgreement,
       };
 }
 
