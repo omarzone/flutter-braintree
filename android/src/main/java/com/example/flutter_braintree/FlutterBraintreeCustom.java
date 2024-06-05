@@ -28,6 +28,7 @@ import com.braintreepayments.api.UserCanceledException;
 
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class FlutterBraintreeCustom extends AppCompatActivity implements PayPalListener {
     private BraintreeClient braintreeClient;
@@ -117,6 +118,7 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements PayPalL
             checkOutRequest.setCurrencyCode(intent.getStringExtra("currencyCode"));
             checkOutRequest.setDisplayName(intent.getStringExtra("displayName"));
             checkOutRequest.setBillingAgreementDescription(intent.getStringExtra("billingAgreementDescription"));
+            checkOutRequest.setShouldRequestBillingAgreement(Objects.requireNonNull(intent.getExtras()).getBoolean("requestBillingAgreement"));
 
             String userAction;
             switch (intent.getStringExtra("payPalPaymentUserAction")) {
