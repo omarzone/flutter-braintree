@@ -23,6 +23,7 @@ import com.braintreepayments.api.PayPalPaymentIntent;
 import com.braintreepayments.api.PayPalRequest;
 import com.braintreepayments.api.PayPalVaultRequest;
 import com.braintreepayments.api.PaymentMethodNonce;
+import com.braintreepayments.api.PostalAddress;
 import com.braintreepayments.api.UserCanceledException;
 
 
@@ -153,6 +154,10 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements PayPalL
             nonceMap.put("paypalPayerId", paypalAccountNonce.getPayerId());
             nonceMap.put("typeLabel", "PayPal");
             nonceMap.put("description", paypalAccountNonce.getEmail());
+
+            HashMap<String, Object> billingAddressMap = getStringObjectHashMap(paypalAccountNonce);
+
+            nonceMap.put("billingAddress", billingAddressMap);
         }else if(paymentMethodNonce instanceof CardNonce){
             CardNonce cardNonce = (CardNonce) paymentMethodNonce;
             nonceMap.put("typeLabel", cardNonce.getCardType());
@@ -163,6 +168,20 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements PayPalL
         result.putExtra("paymentMethodNonce", nonceMap);
         setResult(RESULT_OK, result);
         finish();
+    }
+
+    @NonNull
+    private static HashMap<String, Object> getStringObjectHashMap(PayPalAccountNonce paypalAccountNonce) {
+        PostalAddress btBillingAddress = paypalAccountNonce.getBillingAddress();
+        HashMap<String, Object> billingAddressMap = new HashMap<String, Object>();
+        billingAddressMap.put("recipientName",btBillingAddress.getRecipientName());
+        billingAddressMap.put("streetAddress",btBillingAddress.getStreetAddress());
+        billingAddressMap.put("extendedAddress",btBillingAddress.getExtendedAddress());
+        billingAddressMap.put("locality",btBillingAddress.getLocality());
+        billingAddressMap.put("countryCodeAlpha2",btBillingAddress.getCountryCodeAlpha2());
+        billingAddressMap.put("postalCode",btBillingAddress.getPostalCode());
+        billingAddressMap.put("region",btBillingAddress.getRegion());
+        return billingAddressMap;
     }
 
     public void onCancel() {
