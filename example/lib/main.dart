@@ -26,6 +26,9 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             Text('Nonce: ${nonce.nonce}'),
             SizedBox(height: 16),
+            Text(
+                'Billing Address: ${nonce.billingAddress?.toJson().toString()}'),
+            SizedBox(height: 16),
             Text('Type label: ${nonce.typeLabel}'),
             SizedBox(height: 16),
             Text('Description: ${nonce.description}'),
