@@ -34,6 +34,9 @@ open class BaseFlutterBraintreePlugin: NSObject {
         if let paypalNonce = nonce as? BTPayPalAccountNonce {
             dict["paypalPayerId"] = paypalNonce.payerID
             dict["description"] = paypalNonce.email
+            dict["email"] = paypalNonce.email
+            dict["firstName"] = paypalNonce.firstName
+            dict["lastName"] = paypalNonce.lastName
             
             billingAddress["recipientName"] = paypalNonce.billingAddress?.recipientName
             billingAddress["streetAddress"] = paypalNonce.billingAddress?.streetAddress
