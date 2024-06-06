@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.braintreepayments.api.BraintreeClient;
 import com.braintreepayments.api.Card;
@@ -119,6 +121,26 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements PayPalL
             checkOutRequest.setDisplayName(intent.getStringExtra("displayName"));
             checkOutRequest.setBillingAgreementDescription(intent.getStringExtra("billingAgreementDescription"));
             checkOutRequest.setShouldRequestBillingAgreement(Objects.requireNonNull(intent.getExtras()).getBoolean("requestBillingAgreement"));
+            checkOutRequest.setShippingAddressEditable(Objects.requireNonNull(intent.getExtras()).getBoolean("shippingAddressEditable"));
+            checkOutRequest.setShippingAddressRequired(Objects.requireNonNull(intent.getExtras()).getBoolean("shippingAddressRequired"));
+
+            // handles the shipping address override
+            if (intent.getStringExtra("shippingAddressOverride") != null) {
+                try {
+                    JSONObject obj = new JSONObject(intent.getStringExtra("shippingAddressOverride"));
+                    PostalAddress shippingAddressOverride = new PostalAddress();
+                    shippingAddressOverride.setRecipientName(obj.getString("recipientName"));
+                    shippingAddressOverride.setStreetAddress(obj.getString("streetAddress"));
+                    shippingAddressOverride.setExtendedAddress(obj.getString("extendedAddress"));
+                    shippingAddressOverride.setLocality(obj.getString("locality"));
+                    shippingAddressOverride.setCountryCodeAlpha2(obj.getString("countryCodeAlpha2"));
+                    shippingAddressOverride.setPostalCode(obj.getString("postalCode"));
+                    shippingAddressOverride.setRegion(obj.getString("region"));
+                    checkOutRequest.setShippingAddressOverride(shippingAddressOverride);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
             String userAction;
             switch (intent.getStringExtra("payPalPaymentUserAction")) {

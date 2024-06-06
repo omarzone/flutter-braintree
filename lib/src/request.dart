@@ -1,3 +1,5 @@
+import 'package:flutter_braintree/flutter_braintree.dart';
+
 class BraintreeDropInRequest {
   BraintreeDropInRequest({
     this.clientToken,
@@ -199,6 +201,9 @@ class BraintreePayPalRequest {
     this.displayName,
     this.billingAgreementDescription,
     this.requestBillingAgreement = false,
+    this.shippingAddressEditable = true,
+    this.shippingAddressRequired = false,
+    this.shippingAddressOverride,
     this.payPalPaymentIntent = PayPalPaymentIntent.authorize,
     this.payPalPaymentUserAction = PayPalPaymentUserAction.default_,
   });
@@ -226,6 +231,15 @@ class BraintreePayPalRequest {
   /// for additional documentation.
   PayPalPaymentUserAction payPalPaymentUserAction;
 
+  /// allow user to edit shipping address or not
+  bool shippingAddressEditable;
+
+  /// is shipping address required?
+  bool shippingAddressRequired;
+
+  // the address to override the shipping address defined in the customer account
+  BraintreePostalAddress? shippingAddressOverride;
+
   /// Converts this request object into a JSON-encodable format.
   Map<String, dynamic> toJson() => {
         if (amount != null) 'amount': amount,
@@ -236,6 +250,10 @@ class BraintreePayPalRequest {
         'payPalPaymentIntent': payPalPaymentIntent.name,
         'payPalPaymentUserAction': payPalPaymentUserAction.name,
         'requestBillingAgreement': requestBillingAgreement,
+        'shippingAddressEditable': shippingAddressEditable,
+        'shippingAddressRequired': shippingAddressRequired,
+        if (shippingAddressOverride != null)
+          'shippingAddressOverride': shippingAddressOverride?.toJson(),
       };
 }
 
