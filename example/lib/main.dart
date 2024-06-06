@@ -32,6 +32,15 @@ class _MyAppState extends State<MyApp> {
             Text('Type label: ${nonce.typeLabel}'),
             SizedBox(height: 16),
             Text('Description: ${nonce.description}'),
+
+            SizedBox(height: 16),
+            Text('First Name: ${nonce.firstName}'),
+
+            SizedBox(height: 16),
+            Text('Last Name: ${nonce.lastName}'),
+
+            SizedBox(height: 16),
+            Text('email: ${nonce.email}'),
           ],
         ),
       ),

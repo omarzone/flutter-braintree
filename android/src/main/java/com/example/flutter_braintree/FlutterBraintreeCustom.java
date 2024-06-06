@@ -157,6 +157,10 @@ public class FlutterBraintreeCustom extends AppCompatActivity implements PayPalL
             nonceMap.put("typeLabel", "PayPal");
             nonceMap.put("description", paypalAccountNonce.getEmail());
 
+            nonceMap.put("firstName", paypalAccountNonce.getFirstName());
+            nonceMap.put("lastName", paypalAccountNonce.getLastName());
+            nonceMap.put("email", paypalAccountNonce.getEmail());
+
             HashMap<String, Object> billingAddressMap = getResultBillingAddress(paypalAccountNonce);
 
             nonceMap.put("billingAddress", billingAddressMap);

@@ -27,6 +27,9 @@ class BraintreePaymentMethodNonce {
     required this.isDefault,
     this.paypalPayerId,
     this.billingAddress,
+    this.firstName,
+    this.lastName,
+    this.email,
   });
 
   factory BraintreePaymentMethodNonce.fromJson(Map<dynamic, dynamic> source) {
@@ -36,6 +39,9 @@ class BraintreePaymentMethodNonce {
       description: source['description'],
       isDefault: source['isDefault'],
       paypalPayerId: source['paypalPayerId'],
+      firstName: source['firstName'] ?? "",
+      lastName: source['lastName'] ?? "",
+      email: source['email'] ?? "",
       billingAddress: source['billingAddress'] != null
           ? BraintreePostalAddress.fromJson(source['billingAddress'])
           : null,
@@ -51,6 +57,15 @@ class BraintreePaymentMethodNonce {
 
   /// The description of this PaymentMethod for displaying to a customer, e.g. 'Visa ending in...'.
   final String description;
+
+  /// user email.
+  final String? email;
+
+  /// user first name.
+  final String? firstName;
+
+  /// user last name.
+  final String? lastName;
 
   /// True if this payment method is the default for the current customer, false otherwise.
   final bool isDefault;
