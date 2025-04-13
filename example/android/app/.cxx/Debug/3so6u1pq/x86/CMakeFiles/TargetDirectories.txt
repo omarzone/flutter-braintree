@@ -1,0 +1,2 @@
+D:/Proyectos/braintreeNew/flutter-braintree/example/android/app/.cxx/Debug/3so6u1pq/x86/CMakeFiles/edit_cache.dir
+D:/Proyectos/braintreeNew/flutter-braintree/example/android/app/.cxx/Debug/3so6u1pq/x86/CMakeFiles/rebuild_cache.dir
